@@ -71,7 +71,7 @@ inject_loader() {
 const fs = require(\'fs\');
 
 var scriptElement = document.createElement("script");
-scriptElement.src = "https://cdn.rawgit.com/Noskcaj19/slack-plugins/3236ac3e/plugin_utils.js";
+scriptElement.src = "https://rawgit.com/Noskcaj19/slack-plugins/master/plugin_utils.js";
 document.head.appendChild(scriptElement);
 
 // Load plugins
