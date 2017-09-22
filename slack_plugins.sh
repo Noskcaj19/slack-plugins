@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-################################################################################
+####################################################################################
 # Allow usagge of arbitrary javascript "plugins" with the Slack desktop client
-################################################################################
+####################################################################################
 #
 # Loads JavaScript files from `~/.slack_plugins` and injects them
 # into the main slack view
@@ -12,7 +12,7 @@
 #
 # https://github.com/Noskcaj19/slack-plugins
 #
-################################################################################
+####################################################################################
 
 error() {
 	echo "$(tput setaf 124)$(tput bold)✘ $1$(tput sgr0)"
@@ -69,15 +69,27 @@ inject_loader() {
 /////SLACK PLUGINS START/////
 // ** slack-plugins ** https://github.com/Noskcaj19/slack-plugins
 const fs = require(\'fs\');
-const plugin_path = path.join(require(\'os\').homedir(), \'.slack_plugins\');
-fs.readdir(plugin_path, (err, files) => {
+
+var scriptElement = document.createElement("script");
+scriptElement.src = "https://cdn.rawgit.com/Noskcaj19/slack-plugins/3236ac3e/plugin_utils.js";
+document.head.appendChild(scriptElement);
+
+// Load plugins
+const pluginPath = path.join(require(\'os\').homedir(), \'.slack_plugins\')
+fs.readdir(pluginPath, (err, files) => {
   files.forEach(file => {
     if (path.extname(file) === ".js") {
-      console.log(`Loaded plugin from: ${path.join(plugin_path,file)}`);
-      fs.readFile(path.join(plugin_path,file), \'utf8\', (e, r) => { if (e) { throw e; } else { eval(r); } });
+      console.log(`Loaded plugin from: ${path.join(pluginPath, file)}`);
+      fs.readFile(path.join(pluginPath, file), \'utf8\', (e, r) => {
+        if (e) {
+          console.err(e); 
+        } else {
+          eval(`document.addEventListener(\'DOMContentLoaded\', function() {${r}})`); 
+        }
+      });
     }
   });
-})
+});
 /////SLACK PLUGINS END/////' >> $1
 }
 
