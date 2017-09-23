@@ -70,9 +70,7 @@ inject_loader() {
 // ** slack-plugins ** https://github.com/Noskcaj19/slack-plugins
 const fs = require(\'fs\');
 
-var scriptElement = document.createElement("script");
-scriptElement.src = "https://rawgit.com/Noskcaj19/slack-plugins/master/plugin_utils.js";
-document.head.appendChild(scriptElement);
+function addCommand(e,l){TS.cmd_handlers[e]={localized:l.localized||null,type:"client",autocomplete:l.autocomplete||!0,alias_of:l.alias_of||null,aliases:l.aliases||null,desc:l.desc||null,func:l.func||function(){}}}function ephemeralMessage(e){TS.cmd_handlers.addEphemeralFeedback(e)};
 
 // Load plugins
 const pluginPath = path.join(require(\'os\').homedir(), \'.slack_plugins\')
