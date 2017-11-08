@@ -71,6 +71,7 @@ inject_loader() {
 const fs = require(\'fs\');
 
 function addCommand(e,l){TS.cmd_handlers[e]={localized:l.localized||null,type:"client",autocomplete:l.autocomplete||!0,alias_of:l.alias_of||null,aliases:l.aliases||null,desc:l.desc||null,func:l.func||function(){}}}function ephemeralMessage(e){TS.cmd_handlers.addEphemeralFeedback(e)};
+function addDependency(url){ $("<script />", {src: url}).appendTo(\'head\');}
 
 // Load plugins
 const pluginPath = path.join(require(\'os\').homedir(), \'.slack_plugins\')
