@@ -26,3 +26,7 @@ function addCommand(cmd, opts) {
 function ephemeralMessage(msg) {
     TS.cmd_handlers.addEphemeralFeedback(msg);
 }
+
+function addDependency(url) {
+    $("<script />", {src: url}).appendTo('head');
+}
